@@ -1,2 +1,2 @@
 # ec2-cdk
-cdk code to spin up dev ec2 instance
+cdk to spin up development ec2 instance
