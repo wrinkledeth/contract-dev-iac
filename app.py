@@ -107,6 +107,8 @@ class EC2InstanceStack(Stack):
                     # set hostname
                     f"hostnamectl set-hostname {name}",
                     f"echo '127.0.0.1 {name}' >> /etc/hosts",
+                    # fix bash shell: export PS1="\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ "
+                    "sed -i '/^#force_color_prompt=/s/^#//' /home/ubuntu/.bashrc",
                     # update and install packages
                     "apt-get update",
                     "apt-get install -y make jq awscli protobuf-compiler libprotobuf-dev pkg-config libssh-dev libssl-dev pkg-config build-essential neovim git net-tools netcat",
@@ -143,14 +145,16 @@ class EC2InstanceStack(Stack):
                     "su ubuntu -c 'git clone https://github.com/wrinkledeth/BLS-TSS-Network.git'",
                     # Clone Optimism
                     "su ubuntu -c 'git clone https://github.com/wrinkledeth/optimism'",
-                    # fix bash shell: export PS1="\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ "
-                    "sed -i '/^#force_color_prompt=/s/^#//' /home/ubuntu/.bashrc",
+                    # run optimism testnet
+                    "cd /home/ubuntu/optimism",
+                    "su -l ubuntu -c 'cd /home/ubuntu/optimism; git submodule update --init'",
+                    # "su -l ubuntu -c 'cd /home/ubuntu/optimism; make devnet-up-deploy'",  # -l specifies a login shell to source .bashrc
+                    # git submodule update --init
+                    # make devnet-up-deploy
                     # create complete file
                     "touch /tmp/complete",
                     # broadcast completion with wall
                     "wall 'SSM Commands Complete!'",
-                    # git submodule update --init
-                    # make devnet-up-deploy
                 ]
             },
         )
