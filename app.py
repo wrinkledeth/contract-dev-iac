@@ -148,9 +148,11 @@ class EC2InstanceStack(Stack):
                     # run optimism testnet
                     "cd /home/ubuntu/optimism",
                     "su -l ubuntu -c 'cd /home/ubuntu/optimism; git submodule update --init'",
-                    # "su -l ubuntu -c 'cd /home/ubuntu/optimism; make devnet-up-deploy'",  # -l specifies a login shell to source .bashrc
-                    # git submodule update --init
-                    # make devnet-up-deploy
+                    # create notes
+                    "touch /home/ubuntu/notes.txt",
+                    "echo 'git submodule update --init' >> /home/ubuntu/notes.txt",
+                    "echo 'make devnet-up-deploy ' >> /home/ubuntu/notes.txt",
+                    "echo 'make devnet-clean' >> /home/ubuntu/notes.txt",
                     # create complete file
                     "touch /tmp/complete",
                     # broadcast completion with wall
