@@ -78,3 +78,42 @@ make devnet-clean # if you need to clean
 make devnet-up-deploy # deploy flag important for this one
 
 ```
+
+---
+
+## Working OP Repo.
+
+```bash
+git clone https://github.com/wrinkledeth/optimism
+git reset --hard f30fdd3f2a25c87c57531f0a33dbf3d902a7ca57
+
+# edit bedrock-devnet/devnet 
+['docker-compose', 'build', '--progress', 'plain'] # replace this with
+["docker", "compose", "build", "--progress", "plain"] # this
+
+# Makefile
+docker-compose # replace this with
+docker compose # this
+
+# dockerfiles
+# (search for string $BUILDPLATFORM) and add this to top:
+ARG BUILDPLATFORM=linux/amd64
+```
+
+
+## Start Commands
+
+```bash
+git submodule update --init
+make devnet-up-deploy 
+make devnet-clean
+```
+
+## Troubleshoot Batcher
+
+```bash
+ubuntu@jammy:~/optimism$ docker logs f6804639456b
+t=2023-08-11T19:46:55+0000 lvl=info msg=“Initializing Batch Submitter”
+t=2023-08-11T19:46:55+0000 lvl=eror msg=“Unable to create Batch Submitter” error=“querying rollup config: Post \“http://op-node:8545\“: dial tcp 172.18.0.4:8545: connect: connection refused”
+t=2023-08-11T19:46:55+0000 lvl=crit msg=“Application failed”               message=“querying rollup config: Post \“http://op-node:8545\“: dial tcp 172.18.0.4:8545: connect: connection refused”
+```
