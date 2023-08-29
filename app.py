@@ -62,6 +62,9 @@ class EC2InstanceStack(Stack):
 
         # Allow Inbound SSH and Anvil
         sg.add_ingress_rule(ec2.Peer.any_ipv4(), ec2.Port.tcp(8545))
+        sg.add_ingress_rule(ec2.Peer.any_ipv4(), ec2.Port.tcp(8546))
+        sg.add_ingress_rule(ec2.Peer.any_ipv4(), ec2.Port.tcp(9545))
+        sg.add_ingress_rule(ec2.Peer.any_ipv4(), ec2.Port.tcp(9546))
         sg.add_ingress_rule(ec2.Peer.any_ipv4(), ec2.Port.tcp(22))
 
         # Ubuntu AMI
